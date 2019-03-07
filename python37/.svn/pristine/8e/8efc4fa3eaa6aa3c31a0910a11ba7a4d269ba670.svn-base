@@ -1,0 +1,21 @@
+[SERVER]
+
+#更改此文件 下面的间隔时间会生效
+#采集间隔
+DALAY = 5
+
+
+#采集内容
+;OPEN_URL = http://localhost2/collect/api.php
+;;
+;;#采集
+;COLLECT_URL = http://localhost2/collect/collect.php
+
+OPEN_URL = http://api.uc6969.net/collect/Api.php
+COLLECT_URL = http://api.uc6969.net/collect/Collect.php
+#COLLECT_URL = http://localhost1/api/collect/Collect.php
+#是否记录log  TRUE   FALSE
+IS_WRITE_FILE = TRUE
+
+#是否在控制台显示
+IS_CONSOLE_SHOW = TRUE

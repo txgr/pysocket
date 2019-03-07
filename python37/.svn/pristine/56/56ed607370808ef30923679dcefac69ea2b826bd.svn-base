@@ -1,0 +1,22 @@
+#控牌端
+[CONTROL]
+IP = 0.0.0.0
+PORT = 60005
+BUF_SIZE = 1024
+
+[WEB]
+#URL = http://api.ip200.so/resultByBjz.php?act=com
+#URL = http://tsbapi.uc5858.net/resultByBjz.php?act=com
+URL = http://192.168.2.199:8089/resultByBjz.php
+LOTCODE = bjz
+LOTCODE_URL = http://192.168.2.199:8089/bi/get_lotcode
+
+#服务器
+[SERVER]
+HOST = 0.0.0.0
+PORT = 40000
+BUF_SIZE = 1024
+
+#心跳
+HEARTBEAT = 5
+

@@ -1,0 +1,44 @@
+[SERVER]
+host = 0.0.0.0
+port = 50508
+secretkey = sds@6**/1-
+
+#是否记录log  ON   OFF
+is_write_file = ON
+#是否在控制台显示
+is_console_show = ON
+[API]
+# "/" 结尾
+#url = http://fly.s119.so/api/
+url = http://localhost5/api/
+check_user_url = http://api.ip200.so/collect/getusername.php
+#登录
+login = chat/login
+get_token = chat/getToken
+#api 用户
+api_username = api
+api_password = api
+
+#取出可用聊天室 get
+get_room = chat/getRoom
+#禁言  post
+set_mute = chat/addMute
+#保存聊天记录 post
+set_record = chat/say
+#返回历史记录 get
+get_history = chat/history
+#返回历史记录条数
+get_history_number = 10
+#设置用户权限
+set_permissions =
+#用户信息  get
+get_user_info = chat/getUserInfo
+
+#上传头像 post
+set_avatar = chat/avatar
+
+[TOKEN]
+token = 64717066-99ee-4d1d-b139-67ef70d4568d
+createtime = 1528254062
+expiretime = 1530846062
+expires_in = 2592000

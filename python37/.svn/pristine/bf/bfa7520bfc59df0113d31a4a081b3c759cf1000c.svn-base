@@ -1,0 +1,24 @@
+#服务端配置信息
+[SERVER]
+CONSOLE_LOG = 1
+HOST = 127.0.0.1
+PORT = 30000
+#心跳
+HEARTBEAT = 5
+
+#荷官服务端
+[DEALER_SERVER]
+HOST = 127.0.0.1
+PORT = 50505
+
+#API接口
+[API]
+DOMAIN = http://localhost9
+URL = /api/demo/api
+LOTCODE = bjz
+LOTCODE_URL = /api/bi/get_lotcode
+
+#玩家服务端
+[PLAYER_SERVER]
+IP = 127.0.0.1
+START_PORT = 60000

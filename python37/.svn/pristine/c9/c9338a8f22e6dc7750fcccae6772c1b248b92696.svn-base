@@ -1,0 +1,30 @@
+#!/usr/bin/python3
+# -*- coding: UTF-8 -*-
+import requests
+import time
+from common import config
+import threading
+import json
+
+config_file = 'config/ScheduleTask.ini'
+
+
+def collect():
+    while True:
+        con = config.Config(config_file)
+        interval = con.get('API', 'interval')
+        appsecret = con.get('API', 'appsecret')
+        url = con.get('API', 'send_url')
+        url += '?appsecret=' + appsecret
+        try:
+            res = requests.get(url)
+
+            print(time.strftime("%Y-%m-%d %H:%M:%S  ", time.localtime()) + 'runing...')
+        except:
+            pass
+        time.sleep(int(interval))
+
+
+if __name__ == "__main__":
+    t = threading.Thread(target=collect)
+    t.start()

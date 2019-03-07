@@ -1,0 +1,148 @@
+#!/bin/bash
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
+export PATH
+
+# Check if user is root
+if [ $(id -u) != "0" ]; then
+    echo "Error: You must be root to run this script!"
+    exit 1
+fi
+
+PHPFPMPIDFILE=/usr/local/php/var/run/php-fpm.pid
+
+arg1=$1
+arg2=$2
+
+web_start()
+{
+    echo "Starting Web..."
+    /etc/init.d/nginx start
+
+    /etc/init.d/php-fpm start
+    for mphpfpm in /etc/init.d/php-fpm[5,7].[0-9]
+    do
+        if [ -f ${mphpfpm} ]; then
+            ${mphpfpm} start
+        fi
+    done
+}
+
+web_stop()
+{
+    echo "Stoping Web..."
+    /etc/init.d/nginx stop
+
+    /etc/init.d/php-fpm stop
+    for mphpfpm in /etc/init.d/php-fpm[5,7].[0-9]
+    do
+        if [ -f ${mphpfpm} ]; then
+            ${mphpfpm} stop
+        fi
+    done
+}
+
+web_reload()
+{
+    echo "Reload Web..."
+    /etc/init.d/nginx reload
+
+    /etc/init.d/php-fpm reload
+    for mphpfpm in /etc/init.d/php-fpm[5,7].[0-9]
+    do
+        if [ -f ${mphpfpm} ]; then
+            ${mphpfpm} reload
+        fi
+    done
+}
+
+web_kill()
+{
+    echo "Kill nginx,php-fpm,mysql process..."
+    killall nginx
+    killall mysqld
+    killall php-fpm
+    killall php-cgi
+    echo "done."
+}
+
+web_status()
+{
+    /etc/init.d/nginx status
+    if [ -f $PHPFPMPIDFILE ]; then
+        echo "php-fpm is runing!"
+    else
+        echo "php-fpm is stop!"
+    fi
+
+}
+
+Color_Text()
+{
+  echo -e " \e[0;$2m$1\e[0m"
+}
+
+Echo_Red()
+{
+  echo $(Color_Text "$1" "31")
+}
+
+Echo_Green()
+{
+  echo $(Color_Text "$1" "32")
+}
+
+Echo_Yellow()
+{
+  echo -n $(Color_Text "$1" "33")
+}
+
+Echo_Blue()
+{
+  echo $(Color_Text "$1" "34")
+}
+
+Sleep_Sec()
+{
+    seconds=$1
+    while [ "${seconds}" -ge "0" ];do
+      echo -ne "\r     \r"
+      echo -n ${seconds}
+      seconds=$(($seconds - 1))
+      sleep 1
+    done
+    echo -ne "\r"
+}
+
+case "${arg1}" in
+    start)
+        web_start
+        ;;
+    stop)
+        web_stop
+        ;;
+    restart)
+        web_stop
+        web_start
+        ;;
+    reload)
+        web_reload
+        ;;
+    kill)
+        web_kill
+        ;;
+    status)
+        web_status
+        ;;
+    nginx)
+        /etc/init.d/nginx ${arg2}
+        ;;
+
+    php-fpm)
+        /etc/init.d/php-fpm ${arg2}
+        ;;
+
+    *)
+        echo "Usage: web {start|stop|reload|restart|kill|status}"
+        ;;
+esac
+exit
